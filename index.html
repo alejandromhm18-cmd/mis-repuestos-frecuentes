@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Mis repuestos frecuentes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f4f2;
+        --surface: #ffffff;
+        --surface-2: #ececea;
+        --ink: #1c1e20;
+        --ink-soft: #565b60;
+        --line: #d9dad5;
+        --accent: #e8590c;
+        --accent-ink: #ffffff;
+        --accent-soft: #fdeee3;
+        --wa: #1faa55;
+        --wa-ink: #ffffff;
+        --danger: #c92a2a;
+        --radius: 14px;
+        --shadow: 0 1px 2px rgba(20, 22, 24, 0.06), 0 6px 18px rgba(20, 22, 24, 0.05);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #141619;
+          --surface: #1e2124;
+          --surface-2: #26292d;
+          --ink: #f1f2f0;
+          --ink-soft: #a7adb3;
+          --line: #34383d;
+          --accent: #f76707;
+          --accent-soft: #3a2415;
+          --wa: #25b45e;
+          --danger: #ff8787;
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 18px rgba(0, 0, 0, 0.3);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Barlow", system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.45;
+      }
+      .wrap {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 20px 16px 48px;
+      }
+
+      /* ---------- Intro ---------- */
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin: 4px 0 6px;
+      }
+      .kicker svg { flex: none; }
+      h1 {
+        font-family: "Barlow Condensed", "Barlow", sans-serif;
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 1.02;
+        margin: 0 0 10px;
+        letter-spacing: 0.01em;
+      }
+      .intro {
+        color: var(--ink-soft);
+        font-size: 16.5px;
+        margin: 0 0 22px;
+        max-width: 34em;
+      }
+      .intro strong { color: var(--ink); }
+
+      /* ---------- Buttons ---------- */
+      .btn {
+        font: inherit;
+        font-size: 17px;
+        font-weight: 700;
+        border: none;
+        border-radius: var(--radius);
+        padding: 15px 16px;
+        min-height: 56px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+        text-decoration: none;
+        width: 100%;
+      }
+      .btn-send {
+        background: var(--accent);
+        color: var(--accent-ink);
+        font-size: 19px;
+        min-height: 62px;
+        box-shadow: var(--shadow);
+      }
+      .btn-send:active { filter: brightness(0.94); }
+      .btn-send[disabled] { opacity: 0.65; cursor: default; }
+      .btn-copy {
+        background: var(--surface);
+        color: var(--ink);
+        border: 1.5px solid var(--line);
+        font-weight: 600;
+      }
+      .btn-copy:active { background: var(--surface-2); }
+      .btn-wa {
+        background: var(--wa);
+        color: var(--wa-ink);
+      }
+      .btn-wa:active { filter: brightness(0.93); }
+      .btn-add {
+        background: var(--surface);
+        color: var(--accent);
+        border: 1.5px dashed var(--accent);
+        font-weight: 700;
+        min-height: 52px;
+      }
+      .btn-add:active { background: var(--accent-soft); }
+
+      /* ---------- Sections & cards ---------- */
+      section { margin-bottom: 26px; }
+      h2 {
+        font-family: "Barlow Condensed", "Barlow", sans-serif;
+        font-size: 21px;
+        font-weight: 600;
+        margin: 0 0 4px;
+        letter-spacing: 0.02em;
+      }
+      .hint {
+        color: var(--ink-soft);
+        font-size: 14.5px;
+        margin: 0 0 12px;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 16px;
+      }
+
+      /* ---------- Form fields ---------- */
+      .field { margin-bottom: 16px; }
+      .field:last-child { margin-bottom: 0; }
+      label.flabel {
+        display: block;
+        font-weight: 600;
+        font-size: 15.5px;
+        margin-bottom: 6px;
+      }
+      label.flabel .opt {
+        font-weight: 500;
+        color: var(--ink-soft);
+        font-size: 13.5px;
+      }
+      input[type="text"],
+      input[type="tel"],
+      input[type="number"],
+      textarea,
+      select {
+        font: inherit;
+        font-size: 17px;
+        width: 100%;
+        padding: 13px 12px;
+        min-height: 52px;
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface);
+        color: var(--ink);
+      }
+      textarea { min-height: 76px; resize: vertical; }
+      input:focus, textarea:focus, select:focus {
+        outline: 2px solid var(--accent);
+        outline-offset: 0;
+        border-color: var(--accent);
+      }
+      .field-error {
+        display: none;
+        color: var(--danger);
+        font-size: 14px;
+        font-weight: 600;
+        margin: 6px 0 0;
+      }
+      .field-error.show { display: block; }
+      .invalid { border-color: var(--danger) !important; }
+
+      /* ---------- Product list ---------- */
+      .products { display: grid; gap: 10px; }
+      .product {
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        overflow: hidden;
+      }
+      .product.selected { border-color: var(--accent); }
+      .product-toggle {
+        font: inherit;
+        width: 100%;
+        min-height: 56px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--ink);
+        text-align: left;
+        font-size: 16.5px;
+        font-weight: 600;
+      }
+      .check {
+        flex: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        border: 2px solid var(--line);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: transparent;
+        background: var(--surface);
+      }
+      .product.selected .check {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--accent-ink);
+      }
+      .product-detail {
+        display: none;
+        padding: 2px 14px 14px 54px;
+      }
+      .product.selected .product-detail { display: block; }
+      .detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      @media (max-width: 380px) {
+        .detail-grid { grid-template-columns: 1fr; }
+      }
+      .detail-grid label {
+        display: block;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--ink-soft);
+        margin-bottom: 4px;
+      }
+      .detail-grid input, .detail-grid select { min-height: 50px; }
+      .custom-name { margin: 0 14px 10px 54px; display: none; }
+      .product.selected .custom-name { display: block; }
+      .custom-name label {
+        display: block;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--ink-soft);
+        margin-bottom: 4px;
+      }
+      .remove-wrap { display: none; padding: 0 14px 12px 54px; }
+      .product.selected .remove-wrap { display: block; }
+      .remove-custom {
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--danger);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px 0;
+      }
+
+      .send-error {
+        display: none;
+        background: var(--surface);
+        border: 1.5px solid var(--danger);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        font-size: 15px;
+        margin-bottom: 14px;
+      }
+      .send-error.show { display: block; }
+      .send-error a { color: var(--accent); font-weight: 700; }
+
+      /* ---------- Success ---------- */
+      .success {
+        display: none;
+        text-align: center;
+        padding: 28px 16px;
+      }
+      .success.show { display: block; }
+      .success .big-check {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: var(--accent-soft);
+        color: var(--accent);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+      }
+      .success h2 { font-size: 26px; margin-bottom: 6px; }
+      .success p { color: var(--ink-soft); margin: 0 auto; max-width: 26em; }
+
+      /* ---------- Share ---------- */
+      .link-box {
+        background: var(--bg);
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        padding: 11px 12px;
+        font-size: 13.5px;
+        color: var(--ink-soft);
+        word-break: break-all;
+        margin-bottom: 10px;
+      }
+      @media (prefers-color-scheme: dark) {
+        .link-box { background: var(--surface-2); }
+      }
+      .share-actions { display: grid; gap: 10px; }
+      .copied-msg {
+        display: none;
+        font-size: 14.5px;
+        font-weight: 600;
+        color: var(--wa);
+        text-align: center;
+        margin: 10px 0 0;
+      }
+      .copied-msg.show { display: block; }
+
+      .fallback {
+        font-size: 14px;
+        color: var(--ink-soft);
+        text-align: center;
+        margin: 12px 0 0;
+      }
+      .fallback a { color: var(--accent); font-weight: 600; }
+
+      footer {
+        margin-top: 34px;
+        font-size: 13.5px;
+        color: var(--ink-soft);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <p class="kicker">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        Para mototaxistas · Mérida
+      </p>
+      <h1>Mis repuestos frecuentes</h1>
+      <p class="intro">
+        <strong>Toca los productos que renuevas seguido</strong>, pon cuánto te cuesta cada uno y cada cuánto lo
+        cambias, y dale a enviar. Toma unos dos minutos y tus respuestas quedan guardadas en la nube, para
+        conseguirte mejores precios en lo que más gastas.
+      </p>
+
+      <form id="surveyForm" novalidate>
+        <section aria-label="Tus datos">
+          <h2>Tus datos</h2>
+          <div class="card">
+            <div class="field">
+              <label class="flabel" for="fNombre">Tu nombre</label>
+              <input type="text" id="fNombre" autocomplete="name" placeholder="Ej: Carlos Pérez" />
+              <p class="field-error" id="errNombre">Escribe tu nombre para poder identificar tu respuesta.</p>
+            </div>
+            <div class="field">
+              <label class="flabel" for="fMoto">Moto que manejas</label>
+              <input type="text" id="fMoto" placeholder="Marca y modelo o cilindrada. Ej: EK Owen 200, Horse 150" />
+              <p class="field-error" id="errMoto">Escribe qué moto manejas.</p>
+            </div>
+            <div class="field">
+              <label class="flabel" for="fTelefono">Teléfono o WhatsApp <span class="opt">(opcional, solo si quieres que te contactemos con los precios)</span></label>
+              <input type="tel" id="fTelefono" autocomplete="tel" inputmode="tel" placeholder="Ej: 0414-0000000" />
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Productos que cambias con frecuencia">
+          <h2>Qué cambias con frecuencia</h2>
+          <p class="hint">Toca cada producto que renuevas y completa su precio en US$ y cada cuánto lo cambias. Marca al menos uno.</p>
+          <div class="products" id="productList"></div>
+          <p class="field-error" id="errProducts">Marca al menos un producto y completa su precio y cada cuánto lo cambias.</p>
+          <div style="margin-top: 12px;">
+            <button type="button" class="btn btn-add" id="addCustomBtn">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              Agregar otro producto
+            </button>
+          </div>
+        </section>
+
+        <section aria-label="Qué más usas o necesitas">
+          <h2>¿Algo más?</h2>
+          <div class="card">
+            <div class="field">
+              <label class="flabel" for="fExtra">Qué más usas o necesitas <span class="opt">(opcional, si no está en la lista de arriba)</span></label>
+              <textarea id="fExtra" placeholder="Ej: cauchos, batería, guaya de clutch…"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <div class="send-error" id="sendError">
+          No se pudo enviar. Revisa tu conexión a internet e inténtalo de nuevo. Si sigue fallando, puedes llenar
+          el <a href="https://docs.google.com/forms/d/e/1FAIpQLSdKA2cBmXd8HxJpmycYTE4VtOkbj6S_ceA3n_Wu4-UU6WoVjw/viewform" target="_blank" rel="noopener">formulario de Google directamente</a>.
+        </div>
+
+        <button type="submit" class="btn btn-send" id="sendBtn">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          <span id="sendBtnText">Enviar mis respuestas</span>
+        </button>
+        <p class="fallback">
+          Al enviar, tus respuestas quedan guardadas en el formulario.
+          ¿Prefieres la versión larga? <a href="https://docs.google.com/forms/d/e/1FAIpQLSdKA2cBmXd8HxJpmycYTE4VtOkbj6S_ceA3n_Wu4-UU6WoVjw/viewform" target="_blank" rel="noopener">Abrir el formulario de Google</a>
+        </p>
+      </form>
+
+      <div class="card success" id="successBox" role="status">
+        <span class="big-check">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        </span>
+        <h2>¡Listo, ya quedó guardado!</h2>
+        <p>Gracias por responder. Tus precios y productos ya están en la lista que se usa para buscar mejores precios.</p>
+      </div>
+
+      <section aria-label="Compartir con tus compañeros" style="margin-top: 26px;">
+        <h2>Pásalo a tus compañeros</h2>
+        <p class="hint">
+          Si conoces a otros mototaxistas, compárteles el cuestionario. Mientras más respondan, mejor se sabe qué
+          repuestos se necesitan y a qué precios.
+        </p>
+        <div class="link-box" id="formLink">https://alejandromhm18-cmd.github.io/mis-repuestos-frecuentes/</div>
+        <div class="share-actions">
+          <button type="button" class="btn btn-wa" id="shareWaBtn">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            Compartir por WhatsApp
+          </button>
+          <button type="button" class="btn btn-copy" id="copyBtn">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar el enlace
+          </button>
+        </div>
+        <p class="copied-msg" id="copiedMsg">Enlace copiado. Pégalo donde quieras.</p>
+      </section>
+
+      <footer>Cada quien responde desde su propio teléfono; las respuestas quedan guardadas en el formulario.</footer>
+    </main>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var FORM_URL = "https://alejandromhm18-cmd.github.io/mis-repuestos-frecuentes/";
+        var RESPONSE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdKA2cBmXd8HxJpmycYTE4VtOkbj6S_ceA3n_Wu4-UU6WoVjw/formResponse";
+
+        // Entry IDs read from the real Google Form.
+        var ENTRY = {
+          nombre: "entry.316678093",
+          moto: "entry.412293948",
+          productos: "entry.2018931995",
+          precioFrecuencia: "entry.1317838910",
+          extra: "entry.33249646",
+          telefono: "entry.1993933504"
+        };
+
+        // Labels must match the form's checkbox options exactly.
+        var PRODUCTS = [
+          "Lubricante de cadena",
+          "Aceite de motor",
+          "Pastillas de freno",
+          "Bujía",
+          "Luces",
+          "Intermitentes",
+          "Espejos",
+          "Posapiés",
+          "Sliders / tapa cadena",
+          "Kit de arrastre"
+        ];
+
+        var FREQUENCIES = [
+          "Cada semana",
+          "Cada 2 semanas",
+          "Cada mes",
+          "Cada 2 meses",
+          "Cada 3 meses",
+          "Cada 6 meses",
+          "Cada año"
+        ];
+
+        var productList = document.getElementById("productList");
+
+        function checkSvg() {
+          return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+        }
+
+        function freqOptions() {
+          var html = '<option value="">Elige…</option>';
+          for (var i = 0; i < FREQUENCIES.length; i++) {
+            html += '<option value="' + FREQUENCIES[i] + '">' + FREQUENCIES[i] + "</option>";
+          }
+          return html;
+        }
+
+        function detailHtml() {
+          return (
+            '<div class="product-detail"><div class="detail-grid">' +
+            '<div><label>Precio (US$)</label>' +
+            '<input type="number" class="p-price" inputmode="decimal" min="0" step="any" placeholder="Ej: 5" /></div>' +
+            '<div><label>Cada cuánto lo cambias</label>' +
+            '<select class="p-freq">' + freqOptions() + "</select></div>" +
+            "</div></div>"
+          );
+        }
+
+        function wireToggle(el) {
+          var toggle = el.querySelector(".product-toggle");
+          toggle.addEventListener("click", function () {
+            var on = el.classList.toggle("selected");
+            toggle.setAttribute("aria-pressed", on ? "true" : "false");
+          });
+        }
+
+        function buildProduct(name) {
+          var el = document.createElement("div");
+          el.className = "product";
+          el.setAttribute("data-product", name);
+          el.innerHTML =
+            '<button type="button" class="product-toggle" aria-pressed="false">' +
+            '<span class="check">' + checkSvg() + "</span><span>" + name + "</span></button>" +
+            detailHtml();
+          wireToggle(el);
+          return el;
+        }
+
+        function buildCustom() {
+          var el = document.createElement("div");
+          el.className = "product custom selected";
+          el.setAttribute("data-custom", "1");
+          el.innerHTML =
+            '<button type="button" class="product-toggle" aria-pressed="true">' +
+            '<span class="check">' + checkSvg() + "</span><span>Otro producto</span></button>" +
+            '<div class="custom-name"><label>Nombre del producto</label>' +
+            '<input type="text" class="p-name" placeholder="Ej: Caucho trasero" /></div>' +
+            detailHtml() +
+            '<div class="remove-wrap"><button type="button" class="remove-custom">Quitar este producto</button></div>';
+          wireToggle(el);
+          el.querySelector(".remove-custom").addEventListener("click", function () {
+            el.parentNode.removeChild(el);
+          });
+          return el;
+        }
+
+        for (var i = 0; i < PRODUCTS.length; i++) {
+          productList.appendChild(buildProduct(PRODUCTS[i]));
+        }
+
+        document.getElementById("addCustomBtn").addEventListener("click", function () {
+          var el = buildCustom();
+          productList.appendChild(el);
+          var nameInput = el.querySelector(".p-name");
+          if (nameInput) nameInput.focus();
+        });
+
+        /* ---------- Validation & collect ---------- */
+        function setFieldError(input, errEl, bad) {
+          if (bad) {
+            input.classList.add("invalid");
+            errEl.classList.add("show");
+          } else {
+            input.classList.remove("invalid");
+            errEl.classList.remove("show");
+          }
+          return !bad;
+        }
+
+        function collect() {
+          var items = [];
+          var nodes = productList.querySelectorAll(".product.selected");
+          for (var i = 0; i < nodes.length; i++) {
+            var node = nodes[i];
+            var isCustom = node.getAttribute("data-custom") === "1";
+            var name = isCustom
+              ? (node.querySelector(".p-name").value || "").trim()
+              : node.getAttribute("data-product");
+            var priceRaw = (node.querySelector(".p-price").value || "").trim();
+            var freq = node.querySelector(".p-freq").value || "";
+            items.push({ name: name, isCustom: isCustom, priceRaw: priceRaw, freq: freq });
+          }
+          return items;
+        }
+
+        /* ---------- Submit to Google Forms ---------- */
+        var form = document.getElementById("surveyForm");
+        var sendBtn = document.getElementById("sendBtn");
+        var sendBtnText = document.getElementById("sendBtnText");
+        var sendError = document.getElementById("sendError");
+        var sending = false;
+
+        form.addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          if (sending) return;
+
+          var nombreInput = document.getElementById("fNombre");
+          var motoInput = document.getElementById("fMoto");
+          var ok = true;
+          ok = setFieldError(nombreInput, document.getElementById("errNombre"), !nombreInput.value.trim()) && ok;
+          ok = setFieldError(motoInput, document.getElementById("errMoto"), !motoInput.value.trim()) && ok;
+
+          var items = collect();
+          var errProducts = document.getElementById("errProducts");
+          var productsOk = items.length > 0;
+          if (productsOk) {
+            for (var i = 0; i < items.length; i++) {
+              var it = items[i];
+              if (!it.name || !(parseFloat(it.priceRaw) > 0) || !it.freq) { productsOk = false; break; }
+            }
+          }
+          errProducts.classList.toggle("show", !productsOk);
+          if (!productsOk) {
+            errProducts.textContent = items.length === 0
+              ? "Marca al menos un producto y completa su precio y cada cuánto lo cambias."
+              : "A cada producto marcado ponle nombre (si es otro), precio y cada cuánto lo cambias.";
+            ok = false;
+          }
+          if (!ok) {
+            var firstBad = document.querySelector(".invalid") || errProducts;
+            if (firstBad && firstBad.scrollIntoView) firstBad.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+          }
+
+          var params = new URLSearchParams();
+          params.append(ENTRY.nombre, nombreInput.value.trim());
+          params.append(ENTRY.moto, motoInput.value.trim());
+
+          var lines = [];
+          var otherNames = [];
+          for (var j = 0; j < items.length; j++) {
+            var item = items[j];
+            if (item.isCustom) {
+              params.append(ENTRY.productos, "__other_option__");
+              otherNames.push(item.name);
+            } else {
+              params.append(ENTRY.productos, item.name);
+            }
+            lines.push(item.name + ", US$ " + item.priceRaw + ", " + item.freq.toLowerCase());
+          }
+          if (otherNames.length) {
+            params.append(ENTRY.productos + ".other_option_response", otherNames.join(", "));
+          }
+          params.append(ENTRY.precioFrecuencia, lines.join("\n"));
+
+          var extra = document.getElementById("fExtra").value.trim();
+          if (extra) params.append(ENTRY.extra, extra);
+          var tel = document.getElementById("fTelefono").value.trim();
+          if (tel) params.append(ENTRY.telefono, tel);
+
+          params.append("fvv", "1");
+          params.append("pageHistory", "0");
+
+          sending = true;
+          sendBtn.disabled = true;
+          sendBtnText.textContent = "Enviando…";
+          sendError.classList.remove("show");
+
+          fetch(RESPONSE_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+            body: params.toString()
+          }).then(function () {
+            form.style.display = "none";
+            document.getElementById("successBox").classList.add("show");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }).catch(function () {
+            sending = false;
+            sendBtn.disabled = false;
+            sendBtnText.textContent = "Enviar mis respuestas";
+            sendError.classList.add("show");
+            sendError.scrollIntoView({ behavior: "smooth", block: "center" });
+          });
+        });
+
+        /* ---------- Share ---------- */
+        var copiedMsg = document.getElementById("copiedMsg");
+
+        document.getElementById("shareWaBtn").addEventListener("click", function () {
+          var text =
+            "Hola. Este cuestionario es para mototaxistas: marcas los repuestos y accesorios que renuevas seguido, " +
+            "cuánto te cuestan y cada cuánto los cambias. Es corto, con botones, y sirve para conseguir mejores precios: " + FORM_URL;
+          window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(text), "_blank");
+        });
+
+        document.getElementById("copyBtn").addEventListener("click", function () {
+          function done() {
+            copiedMsg.classList.add("show");
+            setTimeout(function () { copiedMsg.classList.remove("show"); }, 3000);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(FORM_URL).then(done, function () { fallbackCopy(FORM_URL); done(); });
+          } else {
+            fallbackCopy(FORM_URL);
+            done();
+          }
+        });
+
+        function fallbackCopy(text) {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); } catch (e) {}
+          document.body.removeChild(ta);
+        }
+      })();
+    </script>
+  </body>
+</html>
